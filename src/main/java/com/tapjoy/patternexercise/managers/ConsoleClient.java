@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 /**
  * Implementation for user interface
+ * Call to manager to process the file
  * @author anabelalvarez
  *
  */

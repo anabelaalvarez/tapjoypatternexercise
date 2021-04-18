@@ -48,12 +48,6 @@ public class PatternManagerImplementation implements PatternManagerInterface{
     
     if (line != null) {
       UtilExtractor.getstringsinbrackets(line, stringsinbrackets, stringoutsidebrackets);
-      //System.out.println("Inside: ");
-      //stringsinbrackets.stream().forEach(System.out::println);
-
-      //System.out.println("Outside: ");
-      //stringoutsidebrackets.stream().forEach(System.out::println);
-    
       Boolean inbrackets = UtilValidator.matchLine(stringsinbrackets);
       if (!inbrackets) {
         match = UtilValidator.matchLine(stringoutsidebrackets);
@@ -78,12 +72,12 @@ public class PatternManagerImplementation implements PatternManagerInterface{
     result.setQuantity(Long.valueOf(0));
     Consumer<String> printaction = line -> result.getLines().add(line);
     
-    //check file data
+    //validate file data: if exists, size and type
     try {
 		if (Files.exists(path) 
 		    && Files.size(path) / 1024 <= 1000  
 		    && Files.probeContentType(path).equalsIgnoreCase("text/plain")) {
-
+          //file valid, then process
 		  try (Stream<String> streamOfLines = Files.lines(path)) {
 		    result.setQuantity(streamOfLines.filter(linepredicate)
 		                                    .peek(s -> printaction.accept(s))
