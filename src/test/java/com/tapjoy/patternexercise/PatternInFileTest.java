@@ -1,9 +1,12 @@
 package com.tapjoy.patternexercise;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.tapjoy.patternexercise.managers.MockPatternManager;
-import com.tapjoy.patternexercise.managers.PatternManager;
+import java.io.File;
+import java.io.IOException;
+
+import com.tapjoy.patternexercise.managers.PatternManagerImplementation;
+import com.tapjoy.patternexercise.managers.PatternManagerInterface;
 import com.tapjoy.patternexercise.model.PatternProcessResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,26 +23,35 @@ import org.junit.jupiter.params.provider.ValueSource;
  */
 public class PatternInFileTest {
 
-  private PatternManager manager;
+  private PatternManagerInterface manager;
 
   @BeforeEach
   void setUp() {
-    manager = new MockPatternManager();
+    manager = new PatternManagerImplementation();
   }
   
   @DisplayName("Test sample provided for tapjoy")
   @ParameterizedTest
   @ValueSource(strings = {"src/test/resources/001_tapjoy_provided.txt", })
-  void test_Input_Provided(String path) {
-    PatternProcessResult result = manager.process(path);
-    assertFalse(result.getQuantity() == 1);
+  void test_Input_Provided(String path) throws IOException {
+	File file = new File(path);
+	String absolutePath = file.getAbsolutePath();
+    PatternProcessResult result = manager.process(absolutePath);
+    assertTrue(result.getQuantity() == 2);
   }
   
-  @DisplayName("Test sample provided for tapjoy")
+  @DisplayName("Test for file not found")
   @ParameterizedTest
   @ValueSource(strings = {"src/test/resources/001_tapjoy_provided_ZZZ.txt", })
   void test_File_Not_Found(String path) {
-    manager.process(path);
+    try {
+    	File file = new File(path);
+    	String absolutePath = file.getAbsolutePath();
+		manager.process(absolutePath);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
     Assertions.fail("File not found.");
   } 
   

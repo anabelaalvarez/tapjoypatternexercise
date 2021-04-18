@@ -3,13 +3,11 @@ package com.tapjoy.patternexercise;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.tapjoy.patternexercise.managers.MockPatternManager;
-import com.tapjoy.patternexercise.managers.PatternManager;
-import java.util.stream.Stream;
+import com.tapjoy.patternexercise.managers.PatternManagerImplementation;
+import com.tapjoy.patternexercise.managers.PatternManagerInterface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -22,11 +20,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 class PatternTest {
 
 
-  private PatternManager manager;
+  private PatternManagerInterface manager;
 
   @BeforeEach
   void setUp() {
-    manager = new MockPatternManager();
+    manager = new PatternManagerImplementation();
   }
 
  
