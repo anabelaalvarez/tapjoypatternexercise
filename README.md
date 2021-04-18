@@ -16,3 +16,4 @@ This is a solution using: Java 11.09 Maven 3.6.3 JUnit 5 Lombok 1.18.6
 
 
 <h2>Assumptions</h2>
+ * the pattern is canse-sensitive  ex: rtTr is invalid
