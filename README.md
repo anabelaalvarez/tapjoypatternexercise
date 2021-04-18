@@ -32,6 +32,7 @@ run the app mvn exec:java -Dexec.mainClass="com.tapjoy.patternexercise.PatternAp
 
 the app will be waiting to enter a filepath to process. There is a file with lines provided in the exercise 001_tapjoy_provided.txt (in src/test/resources).
 You can move to our favourite path and then use it into the app or create a new one.
+For example:
 ![FilePath](https://user-images.githubusercontent.com/60371390/115160462-20259200-a090-11eb-9530-3709c148d0ca.JPG)
 
 
