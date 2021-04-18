@@ -10,10 +10,34 @@ Solution @Author: Anabela Vanesa Alvarez Email: anabelaalvarez@gmail.com
 
 This is a solution using: Java 11.09 Maven 3.6.3 JUnit 5 Lombok 1.18.6 
 
+Main class com.tapjoy.patternexercise.PatternApplication is used for run the app.
+
+PatternApplication starts a ConsoleClient to input file paths or finish the app.
+
+ConsoleClient calls to the manager implementation that identifies and count lines that matchs with the pattern.
+
+
+Unit tests are  in /patternexercise/src/test/java/com/tapjoy/patternexercise
+ using different cases for lines and files.
+
 
 <h2>Follow these steps to install and run the application</h2>
 
+Follow these steps to install and run the application
+clone source code from https://github.com/anabelaalvarez/tapjoypatternexercise.git
+
+build the application mvn clean install
+
+There is a file with lines provided in the exercise 001_tapjoy_provided.txt (in src/test/resources).
+You can move to our favourite path and then use it into the app.
+
+run the app mvn exec:java -Dexec.mainClass="com.tapjoy.patternexercise.PatternApplication"
+
+IMPORTANT NOTE:
+
+exit command finishes the console and the application.
 
 
 <h2>Assumptions</h2>
  * the pattern is canse-sensitive  ex: rtTr is invalid
+ 

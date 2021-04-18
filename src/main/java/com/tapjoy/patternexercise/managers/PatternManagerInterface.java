@@ -1,8 +1,7 @@
 package com.tapjoy.patternexercise.managers;
 
-import java.io.IOException;
-
 import com.tapjoy.patternexercise.model.PatternProcessResult;
+import java.io.IOException;
 
 /**
  * Manager for process a line and or file
@@ -15,5 +14,9 @@ public interface PatternManagerInterface {
   Boolean match(String line);
 
   PatternProcessResult process(String path) throws IOException;
+
+  static PatternManagerInterface getInstance() {
+	  return  PatternManagerImplementation.getInstance();
+  }
 
 }

@@ -3,25 +3,26 @@ package com.tapjoy.patternexercise.managers;
 import com.tapjoy.patternexercise.model.PatternProcessResult;
 import com.tapjoy.patternexercise.utils.UtilExtractor;
 import com.tapjoy.patternexercise.utils.UtilValidator;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+
 /**
- * IMPLEMENTATION OF PatternManagerInterface
+ * IMPLEMENTATION OF PatternManagerInterface.
  * @author anabelaalvarez
  *
  */
 public class PatternManagerImplementation implements PatternManagerInterface{
 
+  private static final PatternManagerInterface instance = new PatternManagerImplementation();
+	 
   @Override
   /**
    * PatternManagerImplementation.match() is the main routine provided for this manager
@@ -45,7 +46,7 @@ public class PatternManagerImplementation implements PatternManagerInterface{
     List<String> stringsinbrackets = new ArrayList<String>();
     List<String> stringoutsidebrackets = new ArrayList<String>();
     
-    if(line!=null) {
+    if (line != null) {
       UtilExtractor.getstringsinbrackets(line, stringsinbrackets, stringoutsidebrackets);
       //System.out.println("Inside: ");
       //stringsinbrackets.stream().forEach(System.out::println);
@@ -68,7 +69,7 @@ public class PatternManagerImplementation implements PatternManagerInterface{
    * print lines that match with the pattern.
    */
   @Override
-  public PatternProcessResult process(String filePath) throws IOException {
+  public PatternProcessResult process(String filePath)  {
     PatternProcessResult result = new PatternProcessResult(); 
     Path path = Paths.get(filePath);
    
@@ -78,23 +79,33 @@ public class PatternManagerImplementation implements PatternManagerInterface{
     Consumer<String> printaction = line -> result.getLines().add(line);
     
     //check file data
-    if (Files.exists(path) && Files.size(path) / 1024 <= 10 && Files.probeContentType(path).equalsIgnoreCase("text/plain")) {
+    try {
+		if (Files.exists(path) 
+		    && Files.size(path) / 1024 <= 1000  
+		    && Files.probeContentType(path).equalsIgnoreCase("text/plain")) {
 
-      try (Stream<String> streamOfLines = Files.lines(path)) {
-        result.setQuantity(streamOfLines.filter(linepredicate)
-                                        .peek(s -> printaction.accept(s))
-                                        .count());
-        result.setMessage("PatternManagerImplementation.process.file: " + filePath + ". FINISH OK");
-      } catch (IOException e) {
-        e.printStackTrace();
-        result.setMessage("PatternManagerImplementation.process.file: " 
-                          + filePath + ". ERROR OPENNING FILE");
-      }
-    } else {
-      result.setMessage("PatternManagerImplementation.process.file: "
-                        + filePath + ". ERROR: FILE NOT FOUND - MAXIMUM SIZE EXCEEDED (10MB) - FILE TYPE NOT ALLOWED (ONLY TXT)");
-    }
+		  try (Stream<String> streamOfLines = Files.lines(path)) {
+		    result.setQuantity(streamOfLines.filter(linepredicate)
+		                                    .peek(s -> printaction.accept(s))
+		                                    .count());
+		    result.setMessage("FINISH OK");
+		  } catch (IOException e) {
+		    e.printStackTrace();
+		    result.setMessage("ERROR OPENNING FILE");
+		  }
+		} else {
+		  result.setMessage("ERROR: FILE NOT FOUND - MAXIMUM SIZE EXCEEDED (10MB) " 
+		                    + "- FILE TYPE NOT ALLOWED (ONLY TXT)");
+		}
+	} catch (IOException e) {
+		 result.setMessage("ERROR: INVALID PATH");
+	}
     return result;
+  }
+
+
+  public static PatternManagerInterface getInstance() {
+    return instance;
   }
   
 
