@@ -28,10 +28,11 @@ clone source code from https://github.com/anabelaalvarez/tapjoypatternexercise.g
 
 build the application mvn clean install
 
-There is a file with lines provided in the exercise 001_tapjoy_provided.txt (in src/test/resources).
-You can move to our favourite path and then use it into the app.
-
 run the app mvn exec:java -Dexec.mainClass="com.tapjoy.patternexercise.PatternApplication"
+
+the app will be waiting to enter a filepath to process. There is a file with lines provided in the exercise 001_tapjoy_provided.txt (in src/test/resources).
+You can move to our favourite path and then use it into the app or create a new one.
+
 
 IMPORTANT NOTE:
 
